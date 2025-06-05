@@ -1,8 +1,8 @@
-const produtosModel = require('../models/produtos')
+const { Produtos } = require('../models')
 
 async function getProdutos(req, res) {
     try {
-        const produtos = await produtosModel.getProdutos()
+        const produtos = await Produtos.findAll()
 
         return res.send(produtos)
         
@@ -14,7 +14,7 @@ async function getProdutos(req, res) {
 
 async function createProduto(req, res) {
     try {
-        const produto = await produtosModel.createProduto(req.body)
+        const produto = await Produtos.create(req.body)
 
         return res.status(201).send(produto)
         
@@ -27,7 +27,11 @@ async function createProduto(req, res) {
 async function deleteProduto(req, res){
     const { id } = req.params;
     try {
-        await produtosModel.deleteProduto(id)
+        await Produtos.destroy({
+            where: {
+                id: id
+            }
+        })
 
         return res.status(202).send('Produto deletado com sucesso')
     } catch (error) {
