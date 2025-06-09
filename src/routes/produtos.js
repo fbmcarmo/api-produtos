@@ -11,11 +11,13 @@ router.get(
 )
 router.post(
     '/produtos',
+    authMiddleware.validateToken,
     produtosMiddleware.validateCreateProduto,
     produtosController.createProduto
 )
 router.delete(
     '/produtos/:id',
+    authMiddleware.validateToken,
     produtosMiddleware.validateDeleteProduto,
     produtosController.deleteProduto
 )
